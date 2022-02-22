@@ -37,7 +37,7 @@ const Post = ({
   };
 
   const deletePost = () => {
-    dispatch(deletePostThunk(_id));
+    dispatch(deletePostThunk(posts.currentPage, posts.pageSize, _id));
   };
 
   const onMouseEnter = () => {

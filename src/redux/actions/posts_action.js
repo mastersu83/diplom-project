@@ -46,7 +46,7 @@ export const getAllPostsThunk =
       let resp = await postsApi.getAllPosts(currentPage, pageSize);
       dispatch(setCurrentPageAction(currentPage));
       dispatch(getAllPostsAction(resp.data));
-      dispatch(getFullPostThunk(id));
+      dispatch(getFullPostThunk(!id ? resp.data.items[0]._id : id));
     } catch (e) {
       console.log(e.message);
     }
@@ -62,14 +62,15 @@ export const getFullPostThunk = (id) => async (dispatch) => {
     console.log(e.message);
   }
 };
-export const deletePostThunk = (id) => async (dispatch) => {
-  try {
-    await postsApi.deletePost(id);
-    // dispatch(getAllPostsThunk(id));
-  } catch (e) {
-    console.log(e.message);
-  }
-};
+export const deletePostThunk =
+  (pageSize, currentPostId, id) => async (dispatch) => {
+    try {
+      await postsApi.deletePost(id);
+      dispatch(getAllPostsThunk(id));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 export const patchPostThunk =
   (data, currentPage, pageSize, id) => async (dispatch) => {
     try {

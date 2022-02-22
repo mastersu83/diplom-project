@@ -65,7 +65,7 @@ export const getFullPostThunk = (id) => async (dispatch) => {
 export const deletePostThunk = (id) => async (dispatch) => {
   try {
     await postsApi.deletePost(id);
-    dispatch(getAllPostsThunk(id));
+    // dispatch(getAllPostsThunk(id));
   } catch (e) {
     console.log(e.message);
   }

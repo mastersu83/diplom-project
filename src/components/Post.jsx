@@ -6,6 +6,7 @@ import {
   deletePostThunk,
   editOrCreateFlagAction,
   getEditedPostAction,
+  getFullPostAction,
   getFullPostThunk,
   getPostEditIdAction,
 } from "../redux/actions/posts_action";
@@ -29,7 +30,8 @@ const Post = ({
   const [linkUnderline, setLinkUnderline] = useState(false);
 
   const getFullPost = () => {
-    dispatch(getFullPostThunk(id));
+    let obj = posts.find((item) => item._id === id);
+    dispatch(getFullPostAction(obj));
     localStorage.setItem("postId", id);
     // dispatch(getPostEditIdAction(id));
     handleActivePost(id);

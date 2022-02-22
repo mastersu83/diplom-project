@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import view from "../assets/img/view.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getFullPostThunk,
-  getPostEditIdAction,
-} from "../redux/actions/posts_action";
 import { useParams } from "react-router-dom";
 import Preloader from "./popupPattern/Preloader";
 

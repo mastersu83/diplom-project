@@ -7,7 +7,6 @@ import {
   editOrCreateFlagAction,
   getEditedPostAction,
   getFullPostAction,
-  getFullPostThunk,
   getPostEditIdAction,
 } from "../redux/actions/posts_action";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";

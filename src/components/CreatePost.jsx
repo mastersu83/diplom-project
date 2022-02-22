@@ -43,8 +43,6 @@ const CreatePost = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log("create");
-
   const onSubmit = async (data) => {
     if (posts.editOrCreateFlag === "create") {
       dispatch(

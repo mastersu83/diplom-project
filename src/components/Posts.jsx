@@ -21,22 +21,16 @@ const Posts = ({ toggleLoginPopup }) => {
 
   let post = posts.posts.map((p) => (
     <Post
+      {...p}
       posts={posts.posts}
       auth={auth}
       key={p._id}
-      id={p._id}
       authId={auth.id}
-      user={p.user}
-      title={p.title}
-      description={p.description}
-      date={p.createdAt}
-      views={p.views}
-      image={p.photoUrl}
       handleActivePost={handleActivePost}
       activePost={activePost}
     />
   ));
-  console.log(posts);
+
   const onPageChanged = (currentPage) => {
     dispatch(
       getAllPostsThunk(currentPage, posts.pageSize, posts.currentPostId)
@@ -51,7 +45,6 @@ const Posts = ({ toggleLoginPopup }) => {
         !postId ? posts.currentPostId : postId
       )
     );
-    console.log(postId);
     setActivePost(postId);
   }, []);
 

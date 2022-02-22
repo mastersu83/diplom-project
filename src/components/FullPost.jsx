@@ -9,7 +9,7 @@ const FullPost = ({ isFetching }) => {
   const params = useParams();
 
   const fullPost = useSelector((state) => state.posts.fullPost);
-  console.log("full");
+
   return (
     <>
       {isFetching ? (

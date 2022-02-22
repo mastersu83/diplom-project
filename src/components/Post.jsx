@@ -16,8 +16,8 @@ const Post = ({
   description,
   date,
   views,
-  id,
-  image,
+  _id,
+  photoUrl,
   handleActivePost,
   activePost,
   user,
@@ -29,15 +29,15 @@ const Post = ({
   const [linkUnderline, setLinkUnderline] = useState(false);
 
   const getFullPost = () => {
-    let obj = posts.find((item) => item._id === id);
+    let obj = posts.find((item) => item._id === _id);
     dispatch(getFullPostAction(obj));
-    localStorage.setItem("postId", id);
-    // dispatch(getPostEditIdAction(id));
-    handleActivePost(id);
+    localStorage.setItem("postId", _id);
+    // dispatch(getPostEditIdAction(_id));
+    handleActivePost(_id);
   };
 
   const deletePost = () => {
-    dispatch(deletePostThunk(id));
+    dispatch(deletePostThunk(_id));
   };
 
   const onMouseEnter = () => {
@@ -52,24 +52,24 @@ const Post = ({
   };
 
   const editPost = () => {
-    localStorage.setItem("postId", id);
+    localStorage.setItem("postId", _id);
     dispatch(editOrCreateFlagAction("edit"));
-    dispatch(getPostEditIdAction(id));
-    let obj = posts.find((item) => item._id === id);
+    dispatch(getPostEditIdAction(_id));
+    let obj = posts.find((item) => item._id === _id);
     dispatch(getEditedPostAction(obj));
   };
 
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <div className={`posts__item ${activePost === id ? "active-post" : ""}`}>
+      <div className={`posts__item ${activePost === _id ? "active-post" : ""}`}>
         <div className="posts__itemPost">
           <div className={`editPostBlock ${showEditBlock ? "show" : ""}`}>
-            <Link to={"/edit-post/" + id}>
+            <Link to={"/edit-post/" + _id}>
               <EditOutlined onClick={editPost} className="editButton" />
             </Link>
             <DeleteOutlined onClick={deletePost} className="deleteButton" />
           </div>
-          <Link to={"/posts/" + id}>
+          <Link to={"/posts/" + _id}>
             <div
               onClick={getFullPost}
               className={`posts__itemTitle ${
@@ -90,7 +90,7 @@ const Post = ({
           </div>
         </div>
         <img
-          src={`http://localhost:5656` + image}
+          src={`http://localhost:5656` + photoUrl}
           alt=""
           className="posts__itemImg"
         />

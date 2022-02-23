@@ -1,6 +1,5 @@
 import axios from "axios";
 
-export let accessToken = window.localStorage.getItem("token");
 let instance = axios.create({
   baseURL: "http://localhost:5656/",
   headers: {

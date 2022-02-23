@@ -132,8 +132,13 @@ a {
     color: #0a3465;
   }
 
+  &__headerIcons {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+  }
+
   &__headerIcon {
-    margin-left: 30px;
     cursor: pointer;
   }
 

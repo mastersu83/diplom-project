@@ -7,8 +7,6 @@ import Post from "./Post";
 import { Pagination } from "antd";
 import { getAllPostsThunk } from "../redux/actions/posts_action";
 
-let postId = localStorage.getItem("postId");
-
 const Posts = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -39,14 +37,10 @@ const Posts = ({ toggleLoginPopup }) => {
 
   useEffect(() => {
     dispatch(
-      getAllPostsThunk(
-        posts.currentPage,
-        posts.pageSize,
-        !postId ? posts.currentPostId : postId
-      )
+      getAllPostsThunk(posts.currentPage, posts.pageSize, posts.currentPostId)
     );
-    setActivePost(postId);
-  }, []);
+    setActivePost(posts.currentPostId);
+  }, [posts.currentPage, posts.pageSize, posts.currentPostId, dispatch]);
 
   return (
     <div className="posts">

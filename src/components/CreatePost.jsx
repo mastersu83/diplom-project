@@ -45,14 +45,7 @@ const CreatePost = () => {
 
   const onSubmit = async (data) => {
     if (posts.editOrCreateFlag === "create") {
-      dispatch(
-        createPostThunk(
-          data,
-          posts.currentPage,
-          posts.pageSize,
-          posts.currentPostId
-        )
-      );
+      dispatch(createPostThunk(data, posts.currentPage, posts.pageSize, null));
       history.push("/posts/" + posts.currentPostId);
     } else {
       dispatch(

@@ -1,13 +1,9 @@
 import React from "react";
 import view from "../assets/img/view.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Preloader from "./popupPattern/Preloader";
 
 const FullPost = ({ isFetching }) => {
-  const dispatch = useDispatch();
-  const params = useParams();
-
   const fullPost = useSelector((state) => state.posts.fullPost);
 
   return (

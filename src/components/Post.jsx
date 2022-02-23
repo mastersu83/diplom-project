@@ -31,8 +31,6 @@ const Post = ({
   const getFullPost = () => {
     let obj = posts.find((item) => item._id === _id);
     dispatch(getFullPostAction(obj));
-    localStorage.setItem("postId", _id);
-    // dispatch(getPostEditIdAction(_id));
     handleActivePost(_id);
   };
 

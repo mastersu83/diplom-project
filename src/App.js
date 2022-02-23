@@ -6,13 +6,11 @@ import FullPost from "./components/FullPost";
 import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
 import React, { useEffect, useState } from "react";
-import { withAuthRedirect } from "./hoc/withAuthRedirect";
 import Popup from "./components/popup/Popup";
 import OpenedMenu from "./components/OpenedMenu";
 import { authMeThunk } from "./redux/actions/auth_action";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "./components/popupPattern/Preloader";
-import { getAllPostsThunk } from "./redux/actions/posts_action";
 import "antd/dist/antd.css";
 
 const App = () => {

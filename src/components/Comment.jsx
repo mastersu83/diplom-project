@@ -3,6 +3,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import {
   deleteCommentThunk,
+  editOrCreateCommentFlagAction,
   getCommentEditIdAction,
   getEditedCommentAction,
 } from "../redux/actions/commentsAction";
@@ -17,10 +18,12 @@ const Comment = ({
   authId,
   setValue,
   fullPostId,
+  setEditComment,
 }) => {
   const dispatch = useDispatch();
   const [showEditCommentBlock, setShowEditCommentBlock] = useState(false);
-
+  console.log(user._id);
+  console.log(authId);
   const onMouseEnter = () => {
     if (user._id === authId) {
       setShowEditCommentBlock(true);
@@ -43,6 +46,8 @@ const Comment = ({
   };
 
   const editComment = () => {
+    setEditComment(false);
+    dispatch(editOrCreateCommentFlagAction("edit"));
     dispatch(getCommentEditIdAction(_id));
     let obj = comments.comments.find((item) => item._id === _id);
     dispatch(getEditedCommentAction(obj));

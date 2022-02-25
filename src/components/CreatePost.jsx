@@ -61,7 +61,7 @@ const CreatePost = ({ currentPostId, currentPage, pageSize }) => {
   }
 
   return (
-    <div className="create__post">
+    <form onSubmit={handleSubmit(onSubmit)} className="create__post">
       <span>{errors.title?.message}</span>
       <input
         {...register("title")}
@@ -104,11 +104,11 @@ const CreatePost = ({ currentPostId, currentPage, pageSize }) => {
         }
       />
       <div className="create__btn">
-        <button onClick={handleSubmit(onSubmit)} className="yellow__button">
+        <button type="onSubmit" className="yellow__button">
           {posts.editOrCreatePostFlag === "edit" ? "Сохранить" : "Опубликовать"}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

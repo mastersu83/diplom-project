@@ -13,6 +13,8 @@ export const authReducer = (state = initialState, action) => {
         user: action.payload.user,
         isAuth: action.payload.isAuth,
       };
+    case "LOGIN":
+      return { ...state, ...action.payload };
     case "SET_ERROR_TEXT":
       return { ...state, errorText: action.payload };
     case "TOGGLE_IS_FETCHING": {

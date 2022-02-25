@@ -4,19 +4,20 @@ import { Link, Route, Switch } from "react-router-dom";
 import addPost from "../assets/img/addPost.svg";
 import logIn from "../assets/img/logIn.svg";
 import logOut from "../assets/img/logOut.svg";
-import { logOutThunk, setErrorText } from "../redux/actions/auth_action";
+import { logOutThunk, setErrorText } from "../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  editOrCreateFlagAction,
+  editOrCreatePostFlagAction,
   getEditedPostAction,
-} from "../redux/actions/posts_action";
+} from "../redux/actions/postsAction";
 
 const Header = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
 
   const isAuth = useSelector((state) => state.auth.isAuth);
   const onAddPost = () => {
-    dispatch(editOrCreateFlagAction("create"));
+    dispatch(editOrCreatePostFlagAction("create"));
+    dispatch(getEditedPostAction({}));
     if (!isAuth) {
       dispatch(setErrorText("Необходимо войти"));
     }

@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   deletePostThunk,
-  editOrCreateFlagAction,
+  editOrCreatePostFlagAction,
   getEditedPostAction,
   getFullPostAction,
   getPostEditIdAction,
-} from "../redux/actions/posts_action";
+} from "../redux/actions/postsAction";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { getPostCommentsThunk } from "../redux/actions/commentsAction";
 
 const Post = ({
   title,
@@ -25,33 +26,35 @@ const Post = ({
   posts,
 }) => {
   const dispatch = useDispatch();
-  const [showEditBlock, setShowEditBlock] = useState(false);
+  const [showEditPostBlock, setShowEditPostBlock] = useState(false);
   const [linkUnderline, setLinkUnderline] = useState(false);
 
-  const getFullPost = () => {
-    let obj = posts.find((item) => item._id === _id);
+  const getFullPost = (id) => {
+    let obj = posts.find((item) => item._id === id);
+    console.log({ obj });
     dispatch(getFullPostAction(obj));
-    handleActivePost(_id);
+    dispatch(getPostEditIdAction(id));
+    dispatch(getPostCommentsThunk(id));
+    handleActivePost(id);
   };
 
   const deletePost = () => {
-    dispatch(deletePostThunk(posts.currentPage, posts.pageSize, _id));
+    dispatch(deletePostThunk(posts.currentPage, posts.pageSize, _id, user._id));
   };
 
   const onMouseEnter = () => {
     if (user._id === authId) {
-      setShowEditBlock(true);
+      setShowEditPostBlock(true);
     }
     setLinkUnderline(true);
   };
   const onMouseLeave = () => {
-    setShowEditBlock(false);
+    setShowEditPostBlock(false);
     setLinkUnderline(false);
   };
 
   const editPost = () => {
-    localStorage.setItem("postId", _id);
-    dispatch(editOrCreateFlagAction("edit"));
+    dispatch(editOrCreatePostFlagAction("edit"));
     dispatch(getPostEditIdAction(_id));
     let obj = posts.find((item) => item._id === _id);
     dispatch(getEditedPostAction(obj));
@@ -61,15 +64,15 @@ const Post = ({
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className={`posts__item ${activePost === _id ? "active-post" : ""}`}>
         <div className="posts__itemPost">
-          <div className={`editPostBlock ${showEditBlock ? "show" : ""}`}>
+          <div className={`editPostBlock ${showEditPostBlock ? "show" : ""}`}>
             <Link to={"/edit-post/" + _id}>
-              <EditOutlined onClick={editPost} className="editButton" />
+              <EditOutlined onClick={editPost} className="editPostButton" />
             </Link>
-            <DeleteOutlined onClick={deletePost} className="deleteButton" />
+            <DeleteOutlined onClick={deletePost} className="deletePostButton" />
           </div>
           <Link to={"/posts/" + _id}>
             <div
-              onClick={getFullPost}
+              onClick={() => getFullPost(_id)}
               className={`posts__itemTitle ${
                 linkUnderline ? "link-underline" : ""
               }`}

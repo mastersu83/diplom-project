@@ -4,14 +4,18 @@ export const getAllPostsAction = (post) => ({
   type: "GET_ALL_POSTS",
   payload: post,
 });
+export const getAllPostsUserAction = (post) => ({
+  type: "GET_ALL_POSTS_USER",
+  payload: post,
+});
 
 export const getFullPostAction = (post) => ({
   type: "GET_FULL_POST",
   payload: post,
 });
 
-export const setCurrentPageAction = (currentPage) => ({
-  type: "SET_CURRENT_PAGE",
+export const setCurrentPostsPageAction = (currentPage) => ({
+  type: "SET_CURRENT_POSTS_PAGE",
   payload: currentPage,
 });
 
@@ -25,8 +29,8 @@ export const getEditedPostAction = (obj) => ({
   payload: obj,
 });
 
-export const editOrCreateFlagAction = (flag) => ({
-  type: "EDIT_OR_CREATE_FLAG",
+export const editOrCreatePostFlagAction = (flag) => ({
+  type: "EDIT_OR_CREATE_POST_FLAG",
   payload: flag,
 });
 
@@ -49,9 +53,19 @@ export const getAllPostsThunk =
   (currentPage, pageSize, id) => async (dispatch) => {
     try {
       let resp = await postsApi.getAllPosts(currentPage, pageSize);
-      dispatch(setCurrentPageAction(currentPage));
+      dispatch(setCurrentPostsPageAction(currentPage));
       dispatch(getAllPostsAction(resp.data));
       dispatch(getFullPostThunk(!id ? resp.data.items[0]._id : id));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+export const getAllPostsUserThunk =
+  (currentPage, pageSize, id) => async (dispatch) => {
+    try {
+      let resp = await postsApi.getAllPostsUser(currentPage, pageSize, id);
+      dispatch(setCurrentPostsPageAction(currentPage));
+      dispatch(getAllPostsUserAction(resp.data));
     } catch (e) {
       console.log(e.message);
     }
@@ -68,10 +82,11 @@ export const getFullPostThunk = (id) => async (dispatch) => {
 };
 
 export const deletePostThunk =
-  (currentPage, pageSize, id) => async (dispatch) => {
+  (currentPage, pageSize, id, userId) => async (dispatch) => {
     try {
       await postsApi.deletePost(id);
       dispatch(getAllPostsThunk(currentPage, pageSize, null));
+      dispatch(getAllPostsUserThunk(currentPage, pageSize, userId));
     } catch (e) {
       console.log(e.message);
     }

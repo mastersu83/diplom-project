@@ -8,7 +8,7 @@ import CreatePost from "./components/CreatePost";
 import React, { useEffect, useState } from "react";
 import Popup from "./components/popup/Popup";
 import OpenedMenu from "./components/OpenedMenu";
-import { authMeThunk } from "./redux/actions/auth_action";
+import { authMeThunk } from "./redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "./components/popupPattern/Preloader";
 import "antd/dist/antd.css";
@@ -33,7 +33,7 @@ const App = () => {
     if (localStorage.getItem("token")) {
       dispatch(authMeThunk());
     }
-  }, []);
+  }, [auth.isAuth]);
 
   return (
     <div className="root">
@@ -61,7 +61,18 @@ const App = () => {
         </Switch>
 
         <Switch>
-          <Route exact path="/profile">
+          <Route exact path="/profile/posts">
+            {auth.isAuth ? (
+              <Profile
+                toggleLoginPopup={toggleLoginPopup}
+                toggleMenu={toggleMenu}
+                menuToggle={menuToggle}
+              />
+            ) : (
+              <Redirect to="/" />
+            )}
+          </Route>
+          <Route exact path="/profile/comments">
             {auth.isAuth ? (
               <Profile
                 toggleLoginPopup={toggleLoginPopup}

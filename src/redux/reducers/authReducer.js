@@ -1,18 +1,18 @@
 const initialState = {
-  fullName: null,
-  email: null,
-  id: null,
+  user: {},
   isAuth: false,
   errorText: "",
   isFetching: false,
 };
 
-export const auth_reducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_AUTH":
-      return { ...state, ...action.payload };
-    case "LOGIN":
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuth: action.payload.isAuth,
+      };
     case "SET_ERROR_TEXT":
       return { ...state, errorText: action.payload };
     case "TOGGLE_IS_FETCHING": {

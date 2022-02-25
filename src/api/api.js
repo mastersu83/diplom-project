@@ -76,6 +76,13 @@ export const postsApi = {
         return resp;
       });
   },
+  getAllPostsUser(currentPage, pageSize, id) {
+    return instance
+      .get(`posts?userId=${id}&page=${currentPage}`)
+      .then((resp) => {
+        return resp;
+      });
+  },
   getPost(id) {
     return instance.get(`posts/` + id).then((resp) => {
       return resp;
@@ -88,6 +95,39 @@ export const postsApi = {
     return instance.patch(`posts/` + id, {
       title: title,
       description: description,
+      text: text,
+    });
+  },
+};
+export const commentsApi = {
+  getPostComments(id) {
+    return instance.get(`comments/post/${id}`).then((resp) => {
+      return resp;
+    });
+  },
+  getAllCommentsUser(currentPage, pageSize, id) {
+    return instance
+      .get(`comments?userId=${id}&page=${currentPage}`)
+      .then((resp) => {
+        return resp;
+      });
+  },
+
+  createComment(text, postId) {
+    return instance.post(`comments`, { text, postId }).then((resp) => {
+      return resp;
+    });
+  },
+  getPost(id) {
+    return instance.get(`posts/` + id).then((resp) => {
+      return resp;
+    });
+  },
+  deleteComment(id) {
+    return instance.delete(`comments/` + id);
+  },
+  patchComment(text, id) {
+    return instance.patch(`comments/` + id, {
       text: text,
     });
   },

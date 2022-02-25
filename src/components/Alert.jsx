@@ -1,5 +1,5 @@
 import React from "react";
-import { setErrorText } from "../redux/actions/auth_action";
+import { setErrorText } from "../redux/actions/authAction";
 import { useDispatch } from "react-redux";
 
 const Alert = ({ errorText }) => {

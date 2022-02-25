@@ -5,7 +5,7 @@ import {
   createPostThunk,
   getFullPostThunk,
   patchPostThunk,
-} from "../redux/actions/posts_action";
+} from "../redux/actions/postsAction";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Preloader from "./popupPattern/Preloader";
@@ -16,10 +16,12 @@ const schema = yup
     title: yup
       .string()
       .min(3, "Минимум 3 символа")
+      .max(256, "Максимальная длина заголовка")
       .required("Это обязательное поле"),
     description: yup
       .string()
       .min(3, "Минимум 3 символа")
+      .max(400, "Максимальная длина описания")
       .required("Это обязательное поле"),
     text: yup
       .string()
@@ -29,7 +31,7 @@ const schema = yup
   })
   .required();
 
-const CreatePost = () => {
+const CreatePost = ({ currentPostId, currentPage, pageSize }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
@@ -43,21 +45,14 @@ const CreatePost = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
-    if (posts.editOrCreateFlag === "create") {
-      dispatch(createPostThunk(data, posts.currentPage, posts.pageSize, null));
-      history.push("/posts/" + posts.currentPostId);
+  const onSubmit = (data) => {
+    if (posts.editOrCreatePostFlag === "create") {
+      dispatch(createPostThunk(data, currentPage, pageSize));
+      history.push("/posts/" + currentPostId);
     } else {
-      dispatch(
-        patchPostThunk(
-          data,
-          posts.currentPage,
-          posts.pageSize,
-          posts.currentPostId
-        )
-      );
-      dispatch(getFullPostThunk(posts.currentPostId));
-      history.push("/posts/" + posts.currentPostId);
+      dispatch(patchPostThunk(data, currentPage, pageSize, currentPostId));
+      dispatch(getFullPostThunk(currentPostId));
+      history.push("/posts/" + currentPostId);
     }
   };
 
@@ -69,25 +64,23 @@ const CreatePost = () => {
     <div className="create__post">
       <span>{errors.title?.message}</span>
       <input
-        name="title"
         {...register("title")}
         defaultValue={
-          posts.editOrCreateFlag === "edit"
+          posts.editOrCreatePostFlag === "edit"
             ? setValue("title", posts.editedPost.title)
             : setValue("title", "")
         }
         className="create__titleInput"
         placeholder="Введите заголовок..."
         type="text"
-        // value={setValue("title", posts.editedPost.title)}
       />
       <div className="create__shortDesc">Короткое описание:</div>
       <textarea
         {...register("description")}
         className="create__shortInput"
         defaultValue={
-          posts.editOrCreateFlag === "edit"
-            ? setValue("description", posts.editedPost.description)
+          posts.editOrCreatePostFlag === "edit"
+            ? setValue("description", posts.editedPost.title)
             : setValue("description", "")
         }
       />
@@ -99,22 +92,20 @@ const CreatePost = () => {
           className="create__linkInput"
           type="file"
         />
-        {/*<button className="create__linkBtn">Загрузить</button>*/}
       </div>
       <div className="create__longDesc">Полное описание:</div>
       <textarea
         {...register("text")}
         className="create__longInput"
         defaultValue={
-          posts.editOrCreateFlag === "edit"
-            ? setValue("text", posts.editedPost.text)
+          posts.editOrCreatePostFlag === "edit"
+            ? setValue("text", posts.editedPost.title)
             : setValue("text", "")
         }
-        // value={posts.editedPost.text ? posts.editedPost.text : ""}
       />
       <div className="create__btn">
         <button onClick={handleSubmit(onSubmit)} className="yellow__button">
-          {posts.editOrCreateFlag === "edit" ? "Сохранить" : "Опубликовать"}
+          {posts.editOrCreatePostFlag === "edit" ? "Сохранить" : "Опубликовать"}
         </button>
       </div>
     </div>

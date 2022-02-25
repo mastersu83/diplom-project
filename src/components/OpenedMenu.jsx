@@ -39,7 +39,7 @@ const OpenedMenu = ({ toggleMenu, menuToggle, toggleLoginPopup }) => {
               <Link to="/" className="menu__link active__menuLink">
                 Главная
               </Link>
-              <Link to="/profile" className="menu__link">
+              <Link to="/profile/posts" className="menu__link">
                 Мой профиль
               </Link>
               <Link to="/create-post" className="menu__link">

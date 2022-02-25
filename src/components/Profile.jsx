@@ -1,8 +1,71 @@
-import React from "react";
-import view from "../assets/img/view.svg";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
+import Post from "./Post";
+import { useDispatch, useSelector } from "react-redux";
+import Comment from "./Comment";
+import { Link } from "react-router-dom";
+import { Pagination } from "antd";
+import {
+  getAllPostsThunk,
+  getAllPostsUserThunk,
+} from "../redux/actions/postsAction";
+import { getAllCommentsUserThunk } from "../redux/actions/commentsAction";
 
 const Profile = ({ toggleLoginPopup }) => {
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts);
+  const auth = useSelector((state) => state.auth);
+  const comments = useSelector((state) => state.comments);
+
+  const [activePost, setActivePost] = useState("");
+  const [postsOrCommentList, setPostsOrCommentsList] = useState(true);
+
+  const handleActivePost = (id) => {
+    setActivePost(id);
+  };
+
+  const changePostOrCommentsList = () => {
+    setPostsOrCommentsList(!postsOrCommentList);
+  };
+
+  const onPagePostChanged = (currentPage) => {
+    dispatch(getAllPostsUserThunk(currentPage, posts.pageSize, auth.user._id));
+    dispatch(
+      getAllPostsThunk(currentPage, posts.pageSize, posts.currentPostId)
+    );
+  };
+  const onPageCommentsChanged = (currentPage) => {
+    dispatch(
+      getAllCommentsUserThunk(currentPage, posts.pageSize, auth.user._id)
+    );
+  };
+
+  let post = posts.postsUser.map((p) => (
+    <Post
+      {...p}
+      posts={posts.posts}
+      auth={auth}
+      key={p._id}
+      authId={auth.user._id}
+      handleActivePost={handleActivePost}
+      activePost={activePost}
+    />
+  ));
+
+  let comment = comments.commentsUser.map((c) => (
+    <Comment {...c} authId={auth.user._id} comments={comments} key={c._id} />
+  ));
+
+  console.log(comments.comments.length);
+
+  useEffect(() => {
+    dispatch(
+      getAllPostsUserThunk(posts.currentPage, posts.pageSize, auth.user._id)
+    );
+    if (comments.comments.length) {
+    }
+  }, [comments.comments.length]);
+
   return (
     <div className="profile">
       <Header toggleLoginPopup={toggleLoginPopup} />
@@ -12,107 +75,50 @@ const Profile = ({ toggleLoginPopup }) => {
           Дата регистрации: <span>12 августа 2019 в 08:06</span>
         </div>
         <div className="profile__buttons">
-          <button className="profile__btn active">Статьи</button>
-          <button className="profile__btn">Комментарии</button>
+          <Link to="posts">
+            <button
+              onClick={changePostOrCommentsList}
+              className={`profile__btn ${postsOrCommentList ? "active" : ""}`}
+            >
+              Статьи
+            </button>
+          </Link>
+          <Link to="comments">
+            <button
+              onClick={changePostOrCommentsList}
+              className={`profile__btn ${!postsOrCommentList ? "active" : ""}`}
+            >
+              Комментарии
+            </button>
+          </Link>
         </div>
-        <div className="posts__list">
-          <div className="posts__item">
-            <div className="posts__itemPost">
-              <div className="posts__itemTitle">
-                Какой-то очень интересный заголовок
-              </div>
-              <div className="posts__itemText">
-                На работе потребовалось запилить задачу для автоматического
-                определения города при совершении заказа.
-              </div>
-              <div className="posts__itemDate">
-                <div className="posts__date">12 августа 2019 в 08:06</div>
-                <div className="posts__view">
-                  <img src={view} alt="" className="posts__viewIcon" />
-                  <span className="posts__viewCount">301</span>
-                </div>
-              </div>
+        {postsOrCommentList ? (
+          <>
+            <div className="posts__list">{post}</div>
+            <div className="posts__pagination">
+              <Pagination
+                total={posts.totalUserPosts}
+                current={posts.currentPage}
+                showQuickJumper
+                pageSize={posts.pageSize}
+                onChange={onPagePostChanged}
+              />
             </div>
-            <img
-              src="../assets/img/post-img.jpg"
-              alt=""
-              className="posts__itemImg"
-            />
-          </div>
-          <div className="posts__item">
-            <div className="posts__itemPost">
-              <div className="posts__itemTitle">
-                JavaScript: Как с помощью Dadata определить город по IP?
-              </div>
-              <div className="posts__itemText">
-                На работе потребовалось запилить задачу для автоматического
-                определения города при совершении заказа. Было решено сделать
-                это на фронте, ибо бек был занят.
-              </div>
-              <div className="posts__itemDate">
-                <div className="posts__date">12 августа 2019 в 08:06</div>
-                <div className="posts__view">
-                  <img
-                    src="../assets/img/view.svg"
-                    alt=""
-                    className="posts__viewIcon"
-                  />
-                  <span className="posts__viewCount">301</span>
-                </div>
-              </div>
+          </>
+        ) : (
+          <>
+            <div className="full__postComments">{comment}</div>
+            <div className="posts__pagination">
+              <Pagination
+                total={comments.totalUserComments}
+                current={comments.currentPage}
+                showQuickJumper
+                pageSize={posts.pageSize}
+                onChange={onPageCommentsChanged}
+              />
             </div>
-          </div>
-          <div className="posts__item">
-            <div className="posts__itemPost">
-              <div className="posts__itemTitle">
-                Какой-то очень интересный заголовок
-              </div>
-              <div className="posts__itemText">
-                На работе потребовалось запилить задачу для автоматического
-                определения города при совершении заказа.
-              </div>
-              <div className="posts__itemDate">
-                <div className="posts__date">12 августа 2019 в 08:06</div>
-                <div className="posts__view">
-                  <img
-                    src="../assets/img/view.svg"
-                    alt=""
-                    className="posts__viewIcon"
-                  />
-                  <span className="posts__viewCount">301</span>
-                </div>
-              </div>
-            </div>
-            <img
-              src="../assets/img/post-img.jpg"
-              alt=""
-              className="posts__itemImg"
-            />
-          </div>
-          <div className="posts__item">
-            <div className="posts__itemPost">
-              <div className="posts__itemTitle">
-                Какой-то очень интересный заголовок
-              </div>
-              <div className="posts__itemText">
-                На работе потребовалось запилить задачу для автоматического
-                определения города при совершении заказа. Было решено сделать
-                это на фронте, ибо бек был занят.
-              </div>
-              <div className="posts__itemDate">
-                <div className="posts__date">12 августа 2019 в 08:06</div>
-                <div className="posts__view">
-                  <img
-                    src="../assets/img/view.svg"
-                    alt=""
-                    className="posts__viewIcon"
-                  />
-                  <span className="posts__viewCount">301</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

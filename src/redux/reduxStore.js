@@ -1,12 +1,14 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import { auth_reducer } from "./reducers/auth_reducer";
-import { posts_reducer } from "./reducers/posts_reducer";
+import { authReducer } from "./reducers/authReducer";
+import { postsReducer } from "./reducers/postsReducer";
+import { commentsReducer } from "./reducers/commentsReducer";
 
 let reducers = combineReducers({
-  auth: auth_reducer,
-  posts: posts_reducer,
+  auth: authReducer,
+  posts: postsReducer,
+  comments: commentsReducer,
 });
 
 let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));

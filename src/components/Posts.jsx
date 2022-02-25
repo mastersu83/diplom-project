@@ -5,12 +5,17 @@ import Header from "./Header";
 import Preloader from "./popupPattern/Preloader";
 import Post from "./Post";
 import { Pagination } from "antd";
-import { getAllPostsThunk } from "../redux/actions/posts_action";
+import {
+  getAllPostsThunk,
+  getAllPostsUserThunk,
+} from "../redux/actions/postsAction";
+import { getAllCommentsUserThunk } from "../redux/actions/commentsAction";
 
 const Posts = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const posts = useSelector((state) => state.posts);
+  const comments = useSelector((state) => state.comments);
   const [activePost, setActivePost] = useState("");
 
   const handleActivePost = (id) => {
@@ -23,7 +28,7 @@ const Posts = ({ toggleLoginPopup }) => {
       posts={posts.posts}
       auth={auth}
       key={p._id}
-      authId={auth.id}
+      authId={auth.user._id}
       handleActivePost={handleActivePost}
       activePost={activePost}
     />
@@ -36,11 +41,23 @@ const Posts = ({ toggleLoginPopup }) => {
   };
 
   useEffect(() => {
-    dispatch(
-      getAllPostsThunk(posts.currentPage, posts.pageSize, posts.currentPostId)
-    );
+    if (auth.user._id) {
+      dispatch(
+        getAllPostsThunk(posts.currentPage, posts.pageSize, posts.currentPostId)
+      );
+      dispatch(
+        getAllPostsUserThunk(posts.currentPage, posts.pageSize, auth.user._id)
+      );
+      dispatch(
+        getAllCommentsUserThunk(
+          comments.currentPage,
+          posts.pageSize,
+          auth.user._id
+        )
+      );
+    }
     setActivePost(posts.currentPostId);
-  }, [posts.currentPage, posts.pageSize, posts.currentPostId, dispatch]);
+  }, [posts.currentPostId, auth.user._id, dispatch]);
 
   return (
     <div className="posts">

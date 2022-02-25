@@ -1,10 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import view from "../assets/img/view.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Preloader from "./popupPattern/Preloader";
+import Comment from "./Comment";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import {
+  createCommentThunk,
+  getPostCommentsThunk,
+  patchCommentThunk,
+} from "../redux/actions/commentsAction";
+
+const schema = yup
+  .object({
+    text: yup
+      .string()
+      .min(3, "Минимум 3 символа")
+      .required("Это обязательное поле"),
+    // file: yup.required("Это обязательное поле"),
+  })
+  .required();
 
 const FullPost = ({ isFetching }) => {
+  const dispatch = useDispatch();
+  const [editComment, setEditComment] = useState(true);
+
+  const auth = useSelector((state) => state.auth);
   const fullPost = useSelector((state) => state.posts.fullPost);
+  const comments = useSelector((state) => state.comments);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    resetField,
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onCancelEditComment = () => {
+    setEditComment(true);
+    resetField("text");
+  };
+  const onSubmit = (data) => {
+    console.log(data);
+    if (editComment) {
+      dispatch(createCommentThunk(data.text, fullPost._id));
+    } else {
+      dispatch(
+        patchCommentThunk(data.text, comments.editedComment._id, fullPost._id)
+      );
+      setEditComment(true);
+      dispatch(getPostCommentsThunk(fullPost._id));
+    }
+    resetField("text");
+  };
+
+  useEffect(() => {
+    if (fullPost._id) {
+      dispatch(getPostCommentsThunk(fullPost._id));
+    }
+  }, [fullPost._id, dispatch]);
+
+  let comment = comments.comments.map((c) => (
+    <Comment
+      {...c}
+      fullPostId={fullPost._id}
+      setValue={setValue}
+      authId={auth.user._id}
+      setEditComment={setEditComment}
+      comments={comments}
+      key={c._id}
+    />
+  ));
 
   return (
     <>
@@ -32,38 +102,47 @@ const FullPost = ({ isFetching }) => {
           </div>
           <div className="full__postContainer">
             <div className="full__postText">{fullPost.text}</div>
-            <div className="full__comments">Комментарии (3)</div>
-            <div className="full__postComments">
-              <div className="full__postComment">
-                <div className="full__postCommentHeader">
-                  <div className="full__postCommentName">Vasya Pupkin</div>
-                  <div className="full__postCommentDate">
-                    12 августа 2019 в 08:06
-                  </div>
-                </div>
-                <div className="full__postCommentText">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Porttitor adipiscing leo id sed neque, diam nibh.
-                </div>
-              </div>
-              <div className="full__postComment">
-                <div className="full__postCommentHeader">
-                  <div className="full__postCommentName">Vasya Pupkin</div>
-                  <div className="full__postCommentDate">
-                    12 августа 2019 в 08:06
-                  </div>
-                </div>
-                <div className="full__postCommentText">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Porttitor adipiscing leo id sed neque, diam nibh.
-                </div>
-              </div>
+            <div className="full__comments">
+              Комментарии ({comments.totalPostComments})
             </div>
+            <div className="full__postComments">{comment}</div>
             <div className="full__postAddComment">
-              <div className="full__addCommentTitle">Добавить комментарий</div>
-              <textarea className="full__addCommentInput" />
+              <div className="full__addCommentTitle">
+                {editComment
+                  ? "Добавить комментарий"
+                  : "Редактировать комментарий"}
+              </div>
+              <span>{errors.text?.message}</span>
+
+              <textarea
+                {...register("text")}
+                className="full__addCommentInput"
+                defaultValue=""
+              />
               <div className="full__addCommentBtn">
-                <button className="yellow__button">Отправить</button>
+                {editComment ? (
+                  <button
+                    onClick={handleSubmit(onSubmit)}
+                    className="yellow__button"
+                  >
+                    Отправить
+                  </button>
+                ) : (
+                  <div className="full__addCommentBtn">
+                    <button
+                      onClick={handleSubmit(onSubmit)}
+                      className="yellow__button"
+                    >
+                      Сохранить
+                    </button>
+                    <button
+                      onClick={onCancelEditComment}
+                      className="yellow__button"
+                    >
+                      Отмена
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

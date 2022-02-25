@@ -1,15 +1,17 @@
 const initialState = {
   posts: [],
+  postsUser: [],
   fullPost: {},
   totalPosts: 0,
+  totalUserPosts: 0,
   pageSize: 5,
   currentPage: 1,
   currentPostId: null,
   editedPost: {},
-  editOrCreateFlag: null,
+  editOrCreatePostFlag: "create",
 };
 
-export const posts_reducer = (state = initialState, action) => {
+export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ALL_POSTS":
       return {
@@ -17,7 +19,13 @@ export const posts_reducer = (state = initialState, action) => {
         posts: action.payload.items,
         totalPosts: action.payload.total,
       };
-    case "SET_CURRENT_PAGE":
+    case "GET_ALL_POSTS_USER":
+      return {
+        ...state,
+        postsUser: action.payload.items,
+        totalUserPosts: action.payload.total,
+      };
+    case "SET_CURRENT_POSTS_PAGE":
       return {
         ...state,
         currentPage: action.payload,
@@ -34,8 +42,8 @@ export const posts_reducer = (state = initialState, action) => {
       };
     case "GET_FULL_POST":
       return { ...state, fullPost: action.payload };
-    case "EDIT_OR_CREATE_FLAG":
-      return { ...state, editOrCreateFlag: action.payload };
+    case "EDIT_OR_CREATE_POST_FLAG":
+      return { ...state, editOrCreatePostFlag: action.payload };
     default:
       return state;
   }

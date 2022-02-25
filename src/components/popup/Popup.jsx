@@ -1,7 +1,7 @@
 import React from "react";
 import closeIcon from "../../assets/img/closePopup.svg";
 import { useDispatch } from "react-redux";
-import { isLoginThunk, isRegisterThunk } from "../../redux/actions/auth_action";
+import { isLoginThunk, isRegisterThunk } from "../../redux/actions/authAction";
 
 const Popup = ({ toggleLoginPopup, popupLogin }) => {
   const dispatch = useDispatch();

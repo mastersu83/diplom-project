@@ -11,11 +11,12 @@ import {
 } from "../redux/actions/postsAction";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { getPostCommentsThunk } from "../redux/actions/commentsAction";
+import { getDate } from "../utils/dateFormater";
 
 const Post = ({
   title,
   description,
-  date,
+  createdAt,
   views,
   _id,
   photoUrl,
@@ -83,7 +84,7 @@ const Post = ({
 
           <div className="posts__itemText">{description}</div>
           <div className="posts__itemDate">
-            <div className="posts__date">{date}</div>
+            <div className="posts__date">{getDate(createdAt)}</div>
             <div className="posts__view">
               <img src={view} alt="" className="posts__viewIcon" />
               <span className="posts__viewCount">{views}</span>

@@ -1,6 +1,9 @@
 {
   "name": "diplom-project",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.14.0"
+  },
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

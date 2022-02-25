@@ -14,11 +14,11 @@ import {
 const Header = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
 
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const auth = useSelector((state) => state.auth);
   const onAddPost = () => {
     dispatch(editOrCreatePostFlagAction("create"));
     dispatch(getEditedPostAction({}));
-    if (!isAuth) {
+    if (!auth.isAuth) {
       dispatch(setErrorText("Необходимо войти"));
     }
   };
@@ -28,7 +28,11 @@ const Header = ({ toggleLoginPopup }) => {
   };
   return (
     <div className="posts__header">
-      <div className="posts__headerTitle">VASYA BLOG</div>
+      <Link to="/">
+        <div className="posts__headerTitle">
+          {auth.user.fullName.toUpperCase()} BLOG
+        </div>
+      </Link>
       <div className="posts__headerIcons">
         <img src={search} alt="" className="posts__headerIcon" title="Поиск" />
         <Link to="/create-post">
@@ -41,7 +45,7 @@ const Header = ({ toggleLoginPopup }) => {
           />
         </Link>
 
-        {!isAuth && (
+        {!auth.isAuth && (
           <img
             onClick={toggleLoginPopup}
             src={logIn}
@@ -52,7 +56,7 @@ const Header = ({ toggleLoginPopup }) => {
         )}
 
         <Switch>
-          {isAuth && (
+          {auth.isAuth && (
             <Route>
               <Link to="/">
                 <img

@@ -10,6 +10,7 @@ import {
   getAllPostsUserThunk,
 } from "../redux/actions/postsAction";
 import { getAllCommentsUserThunk } from "../redux/actions/commentsAction";
+import { getDate } from "../utils/dateFormater";
 
 const Profile = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
@@ -70,9 +71,9 @@ const Profile = ({ toggleLoginPopup }) => {
     <div className="profile">
       <Header toggleLoginPopup={toggleLoginPopup} />
       <div className="posts">
-        <div className="profile__name">Вася Пупкин</div>
+        <div className="profile__name">{auth.user.fullName}</div>
         <div className="profile__dateRegister">
-          Дата регистрации: <span>12 августа 2019 в 08:06</span>
+          Дата регистрации: <span>{getDate(auth.user.createdAt)}</span>
         </div>
         <div className="profile__buttons">
           <Link to="posts">

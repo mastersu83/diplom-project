@@ -21,7 +21,6 @@ const Comment = ({
   post,
   fullPostId,
   setEditComment,
-  currentPostId,
 }) => {
   const dispatch = useDispatch();
   const [showEditCommentBlock, setShowEditCommentBlock] = useState(false);
@@ -54,7 +53,6 @@ const Comment = ({
     dispatch(getCommentEditIdAction(_id));
     let obj = comments.comments.find((item) => item._id === _id);
     dispatch(getEditedCommentAction(obj));
-    console.log(obj);
     history.push("/posts/" + post);
     setValue("text", text);
   };

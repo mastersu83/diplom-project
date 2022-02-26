@@ -57,8 +57,6 @@ const Profile = ({ toggleLoginPopup }) => {
     <Comment {...c} authId={auth.user._id} comments={comments} key={c._id} />
   ));
 
-  console.log(comments.comments.length);
-
   useEffect(() => {
     dispatch(
       getAllPostsUserThunk(posts.currentPage, posts.pageSize, auth.user._id)

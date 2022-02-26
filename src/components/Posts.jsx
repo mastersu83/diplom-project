@@ -67,7 +67,7 @@ const Posts = ({ toggleLoginPopup }) => {
         toggleLoginPopup={toggleLoginPopup}
       />
       {!posts.posts.length ? (
-        <Preloader />
+        <Preloader text="Ничего не найдено" />
       ) : (
         <>
           <div className="posts__list">{post}</div>

@@ -45,7 +45,6 @@ const FullPost = ({ isFetching }) => {
     resetField("text");
   };
   const onSubmit = (data) => {
-    console.log(data);
     if (editComment) {
       dispatch(createCommentThunk(data.text, fullPost._id));
     } else {
@@ -79,7 +78,7 @@ const FullPost = ({ isFetching }) => {
   return (
     <>
       {isFetching ? (
-        <Preloader />
+        <Preloader text="Идет загрузка..." />
       ) : (
         <div className="full__post">
           <div className="full__postTitleBox">

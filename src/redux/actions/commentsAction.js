@@ -66,7 +66,6 @@ export const createCommentThunk = (text, postId) => async (dispatch) => {
 export const deleteCommentThunk =
   (currentPage, pageSize, commentPostId, commentId, userid) =>
   async (dispatch) => {
-    console.log(commentId);
     try {
       await commentsApi.deleteComment(commentId);
       dispatch(getPostCommentsThunk(commentPostId));

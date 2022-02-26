@@ -101,3 +101,12 @@ export const patchPostThunk =
       console.log(e.message);
     }
   };
+
+export const searchPostThunk = (search) => async (dispatch) => {
+  try {
+    let resp = await postsApi.searchPost(search);
+    dispatch(getAllPostsAction(resp.data));
+  } catch (e) {
+    console.log(e.message);
+  }
+};

@@ -1,12 +1,12 @@
 import React from "react";
 import miPhoto from "../assets/img/mi-foto.jpg";
 
-const About = () => {
+const About = ({ name }) => {
   return (
     <div className="about">
-      <div className="about__name">Vasya Pupkin</div>
+      <div className="about__name">{name}</div>
       <div className="about__title">Блог фронтенд-разработчика</div>
-      <img className="about__photo" src={miPhoto} alt="photo" />
+      <img src={miPhoto} alt="photo" className="about__photo" />
       <div className="about__me">Обо мне</div>
       <div className="about__text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean

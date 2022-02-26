@@ -31,7 +31,7 @@ const schema = yup
   })
   .required();
 
-const CreatePost = ({ currentPostId, currentPage, pageSize }) => {
+const CreatePost = ({ currentPostId, currentPage, pageSize, isAuth }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
@@ -56,8 +56,8 @@ const CreatePost = ({ currentPostId, currentPage, pageSize }) => {
     }
   };
 
-  if (!posts.posts.length) {
-    return <Preloader />;
+  if (!isAuth) {
+    return <Preloader text="Идет загрузка..." />;
   }
 
   return (

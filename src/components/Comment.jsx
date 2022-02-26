@@ -22,8 +22,7 @@ const Comment = ({
 }) => {
   const dispatch = useDispatch();
   const [showEditCommentBlock, setShowEditCommentBlock] = useState(false);
-  console.log(user._id);
-  console.log(authId);
+
   const onMouseEnter = () => {
     if (user._id === authId) {
       setShowEditCommentBlock(true);

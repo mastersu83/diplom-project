@@ -98,6 +98,9 @@ export const postsApi = {
       text: text,
     });
   },
+  searchPost(search) {
+    return instance.get(`posts?query=${search}&limit=5`);
+  },
 };
 export const commentsApi = {
   getPostComments(id) {
@@ -115,11 +118,6 @@ export const commentsApi = {
 
   createComment(text, postId) {
     return instance.post(`comments`, { text, postId }).then((resp) => {
-      return resp;
-    });
-  },
-  getPost(id) {
-    return instance.get(`posts/` + id).then((resp) => {
       return resp;
     });
   },

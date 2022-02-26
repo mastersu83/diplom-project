@@ -41,13 +41,16 @@ const App = () => {
         <Route exact path="/posts/:id">
           <FullPost isFetching={auth.isFetching} />
         </Route>
-        <Route exact path="/" component={About} />
+        <Route exact path="/">
+          <About name={auth.user.fullName} />
+        </Route>
         <Route
           exact
           path={["/create-post", "/edit-post/" + posts.currentPostId]}
         >
           {auth.isAuth ? (
             <CreatePost
+              isAuth={auth.isAuth}
               currentPostId={posts.currentPostId}
               currentPage={posts.currentPage}
               pageSize={posts.pageSize}
@@ -57,7 +60,9 @@ const App = () => {
           )}
         </Route>
         <Switch>
-          <Route exact path="/posts" component={Preloader} />
+          <Route exact path="/posts">
+            <Preloader text="Идет загрузка..." />
+          </Route>
         </Switch>
 
         <Switch>

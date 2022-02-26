@@ -32,7 +32,6 @@ const Post = ({
 
   const getFullPost = (id) => {
     let obj = posts.find((item) => item._id === id);
-    console.log({ obj });
     dispatch(getFullPostAction(obj));
     dispatch(getPostEditIdAction(id));
     dispatch(getPostCommentsThunk(id));

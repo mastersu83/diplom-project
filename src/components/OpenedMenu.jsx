@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getDate } from "../utils/dateFormater";
 
 const OpenedMenu = ({ toggleMenu, menuToggle, toggleLoginPopup }) => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const auth = useSelector((state) => state.auth);
+  const [active, setActive] = useState(false);
 
   const handleClick = (e) => {
     if (
@@ -14,6 +16,10 @@ const OpenedMenu = ({ toggleMenu, menuToggle, toggleLoginPopup }) => {
     } else {
       menuToggle(false);
     }
+  };
+
+  const onActiveLink = () => {
+    setActive(!active);
   };
 
   const openLoginPopup = () => {
@@ -28,22 +34,31 @@ const OpenedMenu = ({ toggleMenu, menuToggle, toggleLoginPopup }) => {
   return (
     <div>
       <div className={`menu open ${toggleMenu ? "" : "hide__menu"}`}>
-        {isAuth ? (
+        {auth.isAuth ? (
           <div className="menu__top">
             <div className="close__button">Закрыть</div>
-            <div className="menu__name">Вася Пупкин</div>
+            <div className="menu__name">{auth.user.fullName}</div>
             <div className="menu__date">
-              Дата регистрации: 12 августа 2019 в 08:06
+              Дата регистрации: {getDate(auth.user.createdAt)}
             </div>
             <div className="menu__navbar">
-              <Link to="/" className="menu__link active__menuLink">
-                Главная
+              <Link
+                to="/"
+                className={`menu__link ${active ? "active__menuLink" : ""}`}
+              >
+                <span onClick={onActiveLink}>Главная</span>
               </Link>
-              <Link to="/profile/posts" className="menu__link">
-                Мой профиль
+              <Link
+                to="/profile/posts"
+                className={`menu__link ${active ? "active__menuLink" : ""}`}
+              >
+                <span onClick={onActiveLink}>Мой профиль</span>
               </Link>
-              <Link to="/create-post" className="menu__link">
-                Создать запись
+              <Link
+                to="/create-post"
+                className={`menu__link ${active ? "active__menuLink" : ""}`}
+              >
+                <span onClick={onActiveLink}>Создать запись</span>
               </Link>
               <Link to="/" className="menu__link">
                 Выйти

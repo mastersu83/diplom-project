@@ -41,7 +41,6 @@ export const commentsReducer = (state = initialState, action) => {
         currentCommentId: action.payload,
       };
     case "EDIT_OR_CREATE_COMMENT_FLAG":
-      console.log(action.payload);
       return { ...state, editOrCreateCommentFlag: action.payload };
     default:
       return state;

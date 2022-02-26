@@ -1,9 +1,9 @@
 import React from "react";
 
-const Preloader = () => {
+const Preloader = ({ text }) => {
   return (
     <div>
-      <h1>Идет загрузка...</h1>
+      <h1>{text}</h1>
     </div>
   );
 };

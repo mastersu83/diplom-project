@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import {
   createCommentThunk,
+  editOrCreateCommentFlagAction,
   getPostCommentsThunk,
   patchCommentThunk,
 } from "../redux/actions/commentsAction";
@@ -42,6 +43,7 @@ const FullPost = ({ isFetching }) => {
 
   const onCancelEditComment = () => {
     setEditComment(true);
+    dispatch(editOrCreateCommentFlagAction("create"));
     resetField("text");
   };
   const onSubmit = (data) => {

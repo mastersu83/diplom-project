@@ -8,6 +8,7 @@ import {
   getEditedCommentAction,
 } from "../redux/actions/commentsAction";
 import { getDate } from "../utils/dateFormater";
+import { useHistory } from "react-router-dom";
 
 const Comment = ({
   text,
@@ -17,11 +18,14 @@ const Comment = ({
   comments,
   authId,
   setValue,
+  post,
   fullPostId,
   setEditComment,
+  currentPostId,
 }) => {
   const dispatch = useDispatch();
   const [showEditCommentBlock, setShowEditCommentBlock] = useState(false);
+  const history = useHistory();
 
   const onMouseEnter = () => {
     if (user._id === authId) {
@@ -50,7 +54,9 @@ const Comment = ({
     dispatch(getCommentEditIdAction(_id));
     let obj = comments.comments.find((item) => item._id === _id);
     dispatch(getEditedCommentAction(obj));
-    setValue("text", obj.text);
+    console.log(obj);
+    history.push("/posts/" + post);
+    setValue("text", text);
   };
 
   return (

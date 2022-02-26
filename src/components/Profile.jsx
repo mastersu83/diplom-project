@@ -20,6 +20,7 @@ const Profile = ({ toggleLoginPopup }) => {
 
   const [activePost, setActivePost] = useState("");
   const [postsOrCommentList, setPostsOrCommentsList] = useState(true);
+  const [editComment, setEditComment] = useState(true);
 
   const handleActivePost = (id) => {
     setActivePost(id);
@@ -54,7 +55,13 @@ const Profile = ({ toggleLoginPopup }) => {
   ));
 
   let comment = comments.commentsUser.map((c) => (
-    <Comment {...c} authId={auth.user._id} comments={comments} key={c._id} />
+    <Comment
+      {...c}
+      authId={auth.user._id}
+      setEditComment={setEditComment}
+      comments={comments}
+      key={c._id}
+    />
   ));
 
   useEffect(() => {

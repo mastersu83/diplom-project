@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import view from "../assets/img/view.svg";
+import view from "../../assets/img/view.svg";
 import { useDispatch, useSelector } from "react-redux";
-import Preloader from "./popupPattern/Preloader";
-import Comment from "./Comment";
+import Preloader from "../Preloader/Preloader";
+import Comment from "../Comment/Comment";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
@@ -11,7 +11,7 @@ import {
   editOrCreateCommentFlagAction,
   getPostCommentsThunk,
   patchCommentThunk,
-} from "../redux/actions/commentsAction";
+} from "../../redux/actions/commentsAction";
 
 const schema = yup
   .object({

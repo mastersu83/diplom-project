@@ -1,16 +1,16 @@
-import Posts from "./components/Posts";
-import About from "./components/About";
-import ClosedMenu from "./components/ClosedMenu";
+import Posts from "./components/Posts/Posts";
+import About from "./components/About/About";
+import ClosedMenu from "./components/ClosedMenu/ClosedMenu";
 import { Redirect, Route, Switch } from "react-router-dom";
-import FullPost from "./components/FullPost";
-import Profile from "./components/Profile";
-import CreatePost from "./components/CreatePost";
+import FullPost from "./components/FullPost/FullPost";
+import Profile from "./components/Profile/Profile";
+import CreatePost from "./components/CreatePost/CreatePost";
 import React, { useEffect, useState } from "react";
-import Popup from "./components/popup/Popup";
-import OpenedMenu from "./components/OpenedMenu";
+import Popup from "./components/Popup/Popup";
+import OpenedMenu from "./components/OpenedMenu/OpenedMenu";
 import { authMeThunk } from "./redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
-import Preloader from "./components/popupPattern/Preloader";
+import Preloader from "./components/Preloader/Preloader";
 import "antd/dist/antd.css";
 
 const App = () => {
@@ -42,7 +42,7 @@ const App = () => {
           <FullPost isFetching={auth.isFetching} />
         </Route>
         <Route exact path="/">
-          <About name={auth.user.fullName} />
+          <About />
         </Route>
         <Route
           exact

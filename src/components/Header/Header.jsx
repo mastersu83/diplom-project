@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import search from "../assets/img/search.svg";
+import search from "../../assets/img/search.svg";
 import { Link, Route, Switch } from "react-router-dom";
-import addPost from "../assets/img/addPost.svg";
-import logIn from "../assets/img/logIn.svg";
-import logOut from "../assets/img/logOut.svg";
-import { logOutThunk, setErrorText } from "../redux/actions/authAction";
+import addPost from "../../assets/img/addPost.svg";
+import logIn from "../../assets/img/logIn.svg";
+import logOut from "../../assets/img/logOut.svg";
+import { logOutThunk, setErrorText } from "../../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editOrCreatePostFlagAction,
   getEditedPostAction,
   searchPostThunk,
-} from "../redux/actions/postsAction";
+} from "../../redux/actions/postsAction";
 import { useDebounce } from "use-debounce";
 
 const Header = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
-  const [value] = useDebounce(searchInputValue, 1000);
+  const [inputValue] = useDebounce(searchInputValue, 1000);
 
   const auth = useSelector((state) => state.auth);
   const onAddPost = () => {
@@ -39,7 +39,7 @@ const Header = ({ toggleLoginPopup }) => {
 
   useEffect(() => {
     dispatch(searchPostThunk(searchInputValue));
-  }, [value]);
+  }, [inputValue]);
 
   const onLogOut = () => {
     dispatch(logOutThunk());

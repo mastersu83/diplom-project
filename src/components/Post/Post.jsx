@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import view from "../assets/img/view.svg";
+import view from "../../assets/img/view.svg";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -8,10 +8,10 @@ import {
   getEditedPostAction,
   getFullPostAction,
   getPostEditIdAction,
-} from "../redux/actions/postsAction";
+} from "../../redux/actions/postsAction";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { getPostCommentsThunk } from "../redux/actions/commentsAction";
-import { getDate } from "../utils/dateFormater";
+import { getPostCommentsThunk } from "../../redux/actions/commentsAction";
+import { getDate } from "../../utils/dateFormater";
 
 const Post = ({
   title,

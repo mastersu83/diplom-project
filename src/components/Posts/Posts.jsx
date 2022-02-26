@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Alert from "./Alert";
-import Header from "./Header";
-import Preloader from "./popupPattern/Preloader";
-import Post from "./Post";
+import Alert from "../Alert/Alert";
+import Header from "../Header/Header";
+import Preloader from "../Preloader/Preloader";
+import Post from "../Post/Post";
 import { Pagination } from "antd";
 import {
   getAllPostsThunk,
   getAllPostsUserThunk,
-} from "../redux/actions/postsAction";
-import { getAllCommentsUserThunk } from "../redux/actions/commentsAction";
+} from "../../redux/actions/postsAction";
+import { getAllCommentsUserThunk } from "../../redux/actions/commentsAction";
 
 const Posts = ({ toggleLoginPopup }) => {
   const dispatch = useDispatch();
@@ -41,10 +41,10 @@ const Posts = ({ toggleLoginPopup }) => {
   };
 
   useEffect(() => {
+    dispatch(
+      getAllPostsThunk(posts.currentPage, posts.pageSize, posts.currentPostId)
+    );
     if (auth.user._id) {
-      dispatch(
-        getAllPostsThunk(posts.currentPage, posts.pageSize, posts.currentPostId)
-      );
       dispatch(
         getAllPostsUserThunk(posts.currentPage, posts.pageSize, auth.user._id)
       );

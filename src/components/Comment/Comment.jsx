@@ -6,8 +6,8 @@ import {
   editOrCreateCommentFlagAction,
   getCommentEditIdAction,
   getEditedCommentAction,
-} from "../redux/actions/commentsAction";
-import { getDate } from "../utils/dateFormater";
+} from "../../redux/actions/commentsAction";
+import { getDate } from "../../utils/dateFormater";
 import { useHistory } from "react-router-dom";
 
 const Comment = ({

@@ -5,10 +5,10 @@ import {
   createPostThunk,
   getFullPostThunk,
   patchPostThunk,
-} from "../redux/actions/postsAction";
+} from "../../redux/actions/postsAction";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Preloader from "./popupPattern/Preloader";
+import Preloader from "../Preloader/Preloader";
 import { useHistory } from "react-router-dom";
 
 const schema = yup
@@ -80,7 +80,7 @@ const CreatePost = ({ currentPostId, currentPage, pageSize, isAuth }) => {
         className="create__shortInput"
         defaultValue={
           posts.editOrCreatePostFlag === "edit"
-            ? setValue("description", posts.editedPost.title)
+            ? setValue("description", posts.editedPost.description)
             : setValue("description", "")
         }
       />
@@ -99,7 +99,7 @@ const CreatePost = ({ currentPostId, currentPage, pageSize, isAuth }) => {
         className="create__longInput"
         defaultValue={
           posts.editOrCreatePostFlag === "edit"
-            ? setValue("text", posts.editedPost.title)
+            ? setValue("text", posts.editedPost.text)
             : setValue("text", "")
         }
       />

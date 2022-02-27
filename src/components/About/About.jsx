@@ -1,14 +1,15 @@
 import React from "react";
+import classes from "./About.module.scss";
 import miPhoto from "../../assets/img/mi-foto.jpg";
 
 const About = () => {
   return (
-    <div className="about">
-      <div className="about__name">Vasya Pupkin</div>
-      <div className="about__title">Блог фронтенд-разработчика</div>
-      <img src={miPhoto} alt="photo" className="about__photo" />
-      <div className="about__me">Обо мне</div>
-      <div className="about__text">
+    <div className={classes.about}>
+      <div className={classes.about__name}>Vasya Pupkin</div>
+      <div className={classes.about__title}>Блог фронтенд-разработчика</div>
+      <img src={miPhoto} alt="photo" className={classes.about__photo} />
+      <div className={classes.about__me}>Обо мне</div>
+      <div className={classes.about__text}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
         scelerisque diam arcu risus. Imperdiet dolor, porttitor pellentesque
         fringilla aliquet sit. Turpis arcu vitae quis nunc suscipit. Mattis

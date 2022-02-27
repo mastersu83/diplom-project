@@ -29,6 +29,8 @@ const App = () => {
     setToggleMenu(e);
   };
 
+  console.log(toggleMenu);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(authMeThunk());
@@ -95,12 +97,13 @@ const App = () => {
             menuToggle={menuToggle}
           />
         </Switch>
-        <ClosedMenu menuToggle={menuToggle} />
+        <ClosedMenu menuToggle={menuToggle} setToggleMenu={setToggleMenu} />
         <Popup toggleLoginPopup={toggleLoginPopup} popupLogin={popupLogin} />
         <OpenedMenu
           toggleLoginPopup={toggleLoginPopup}
           toggleMenu={toggleMenu}
           menuToggle={menuToggle}
+          setToggleMenu={setToggleMenu}
         />
       </div>
     </div>

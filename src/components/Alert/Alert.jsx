@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./Alert.module.scss";
 import { setErrorText } from "../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
 
@@ -18,7 +19,7 @@ const Alert = ({ errorText }) => {
     }
   }, [errorText]);
   return (
-    <div className={`alert ${needLogin ? "alert__open" : ""}`}>
+    <div className={`${classes.alert} ${needLogin ? classes.alert__open : ""}`}>
       <span>{errorText}</span>
     </div>
   );

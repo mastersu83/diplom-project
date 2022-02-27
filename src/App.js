@@ -29,8 +29,6 @@ const App = () => {
     setToggleMenu(e);
   };
 
-  console.log(toggleMenu);
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(authMeThunk());

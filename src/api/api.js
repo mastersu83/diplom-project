@@ -1,7 +1,6 @@
 import axios from "axios";
 
 let instance = axios.create({
-  baseURL: "/",
   headers: {
     Authorization: localStorage.getItem("token"),
   },
@@ -9,7 +8,6 @@ let instance = axios.create({
 
 export function currentInstance() {
   instance = axios.create({
-    baseURL: "/",
     headers: { Authorization: localStorage.getItem("token") },
   });
 }

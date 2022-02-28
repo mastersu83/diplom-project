@@ -1,5 +1,5 @@
 const supertest = require("supertest");
-const { app } = require("./index");
+const { app } = require("../server");
 const assert = require("assert");
 
 let token = null;

@@ -86,7 +86,7 @@ const FullPost = ({ isFetching }) => {
           <div className="full__postTitleBox">
             <img
               className="full__postImage"
-              src={`http://localhost:5656` + fullPost.photoUrl}
+              src={`/` + fullPost.photoUrl}
               alt=""
             />
             <div className="full__postTitleWrapper">

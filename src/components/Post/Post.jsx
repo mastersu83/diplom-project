@@ -91,7 +91,7 @@ const Post = ({
           </div>
         </div>
         <img
-          src={`http://localhost:5656` + photoUrl}
+          src={`/` + photoUrl}
           alt=""
           className="posts__itemImg"
         />
